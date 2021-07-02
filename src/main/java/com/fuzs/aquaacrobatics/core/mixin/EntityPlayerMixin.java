@@ -69,6 +69,7 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements IPla
     private float previousEyeHeight;
     private float swimAnimation;
     private float lastSwimAnimation;
+    private float timeUnderwater;
 
     public EntityPlayerMixin(World worldIn) {
 
@@ -109,10 +110,36 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements IPla
             this.setAir(Math.min(air + 4, 300));
         }
 
+        if (this.isInWater()) {
+            int i = this.isSpectator() ? 10 : 1;
+            this.timeUnderwater = MathHelper.clamp(this.timeUnderwater + i, 0, 600);
+        } else if (this.timeUnderwater > 0) {
+            this.timeUnderwater = MathHelper.clamp(this.timeUnderwater - 10, 0, 600);
+        }
+
         // updateAquatics
         this.updateEyesInWater();
         this.updateSwimming();
     }
+
+    // based on 1.16
+    @Override
+    public float getWaterVision() {
+        if (!this.isInWater()) {
+            return 0.0f;
+        } else {
+            float f = 600.0f;
+            float f1 = 100.0f;
+            if (this.timeUnderwater >= 600.0f) {
+                return 1.0f;
+            } else {
+                float f2 = MathHelper.clamp(this.timeUnderwater / 100.0f, 0.0f, 1.0f);
+                float f3 = this.timeUnderwater < 100.0f ? 0.0f : MathHelper.clamp(((float)this.timeUnderwater - 100.0f) / 500.0f, 0.0f, 1.0f);
+                return f2 * 0.6f + f3 * 0.39999998f;
+            }
+        }
+    }
+
 
     @Override
     public boolean canSwim() {

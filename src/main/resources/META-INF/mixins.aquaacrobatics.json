@@ -10,6 +10,7 @@
     "EntityMixin",
     "EntityLivingBaseMixin",
     "NetHandlerPlayServerMixin",
+    "BlockStaticLiquidMixin",
     "accessor.IEventBusAccessor"
   ],
   "client": [

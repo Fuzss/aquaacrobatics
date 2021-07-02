@@ -13,6 +13,8 @@ public interface IPlayerResizeable {
 
     boolean getEyesInWaterPlayer();
 
+    float getWaterVision();
+
     float getWidth();
 
     float getHeight();

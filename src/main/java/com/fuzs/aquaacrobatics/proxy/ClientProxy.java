@@ -1,6 +1,7 @@
 package com.fuzs.aquaacrobatics.proxy;
 
 import com.fuzs.aquaacrobatics.client.handler.AirMeterHandler;
+import com.fuzs.aquaacrobatics.client.handler.FogHandler;
 import com.fuzs.aquaacrobatics.integration.IntegrationManager;
 import com.fuzs.aquaacrobatics.integration.artemislib.ArtemisLibIntegration;
 import com.fuzs.aquaacrobatics.integration.mobends.MoBendsIntegration;
@@ -14,6 +15,7 @@ public class ClientProxy extends CommonProxy {
 
         super.onPreInit();
         MinecraftForge.EVENT_BUS.register(new AirMeterHandler());
+        MinecraftForge.EVENT_BUS.register(new FogHandler());
     }
 
     @Override
